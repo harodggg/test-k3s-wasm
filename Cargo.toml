@@ -1,0 +1,5 @@
+[package]
+name = "test-k3s-wasm"
+version = "0.1.0"
+
+[dependencies]
