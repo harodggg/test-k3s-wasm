@@ -19,10 +19,10 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-wasip2 # 或者 wasm32-wasip2
+          targets: wasm32-wasip1 # 或者 wasm32-wasip2
       # 2. 编译项目 (解决你之前的依赖问题)
       - name: Build Wasm
-        run: cargo build --target wasm32-wasip2 --release
+        run: cargo build --target wasm32-wasip1 --release
       # 3. 登录到 GitHub Container Registry
       - name: Log in to GHCR
         uses: docker/login-action@v3
