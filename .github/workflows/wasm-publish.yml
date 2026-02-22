@@ -24,6 +24,13 @@ jobs:
       - name: Build Wasm
         run: cargo build --target wasm32-wasip2 --release
       # 3. 登录到 GitHub Container Registry
+      - name: Prepare Wasm binary for Docker
+        run: |
+          # 自动去 target 目录找到刚刚编译出来的 .wasm 文件
+          # 将其复制到根目录，并统一命名为 main.wasm
+          cp target/wasm32-wasip2/release/*.wasm ./main.wasm
+          # 满足 crun 的 OCI 安全标准，赋予执行权限！
+          chmod +x ./main.wasm
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
