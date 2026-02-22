@@ -19,16 +19,20 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-wasip2 # 或者 wasm32-wasip2
-      # 2. 编译项目 (解决你之前的依赖问题)
-      - name: Build Wasm
-        run: cargo build --target wasm32-wasip2 --release
-      # 3. 登录到 GitHub Container Registry
+          targets: wasm32-wasip1, wasm32-wasip2 # 或者 wasm32-wasip2
+      # 2. 安装 cargo-component (专为组件模型打造的构建工具)
+      - name: Install cargo-component
+        run: cargo install cargo-component
+      # 3. 编译 WASI P2 可执行组件
+      - name: Build Executable Component
+        run: cargo component build --release
+        # 2. 编译项目 (解决你之前的依赖问题)
+        #
       - name: Prepare Wasm binary for Docker
         run: |
           # 自动去 target 目录找到刚刚编译出来的 .wasm 文件
           # 将其复制到根目录，并统一命名为 main.wasm
-          cp target/wasm32-wasip2/release/*.wasm ./main.wasm
+          cp target/wasm32-wasip1/release/*.wasm ./main.wasm
           # 满足 crun 的 OCI 安全标准，赋予执行权限！
           chmod +x ./main.wasm
       - name: Log in to GHCR
