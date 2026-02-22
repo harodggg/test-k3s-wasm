@@ -2,5 +2,5 @@
 FROM scratch
 # 注意：路径要和 Cargo 编译产出的路径一致
 COPY target/wasm32-wasip2/release/test-k3s-wasm.wasm /main.wasm
-RUN chmod +x /main.wasm
+RUN /bin/sh -c  chmod +x /main.wasm
 ENTRYPOINT ["/main.wasm"]
