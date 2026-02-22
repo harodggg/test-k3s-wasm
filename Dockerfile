@@ -1,6 +1,10 @@
-# 这是一个符合 OCI 规范的 Wasm 镜像包
+# 必须先用一个带有 chmod 命令的基础镜像来修改权限
+FROM alpine:latest AS builder
+COPY main.wasm /main.wasm
+# 【最核心的一步】：赋予执行权限
+RUN chmod +x /main.wasm
+
+# 然后再拷贝到极其精简的 scratch 镜像中
 FROM scratch
-# 注意：路径要和 Cargo 编译产出的路径一致
-COPY target/wasm32-wasip2/release/test-k3s-wasm.wasm /main.wasm
-RUN /bin/sh -c  chmod +x /main.wasm
+COPY --from=builder /main.wasm /main.wasm
 ENTRYPOINT ["/main.wasm"]
