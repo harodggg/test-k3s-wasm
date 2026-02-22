@@ -1,15 +1,12 @@
 [package]
-name = "hello-p2"
+name = "my-p2-app"
 version = "0.1.0"
 edition = "2024"
 
-[dependencies]
-wit-bindgen-rt = { version = "0.44.0", features = ["bitflags"] }
-
-[lib]
-crate-type = ["cdylib"]
-
 [package.metadata.component]
-package = "component:hello-p2"
+package = "component:my-p2-app"
 
 [package.metadata.component.dependencies]
+
+[dependencies]
+wit-bindgen-rt = { version = "0.44.0", features = ["bitflags"] }
